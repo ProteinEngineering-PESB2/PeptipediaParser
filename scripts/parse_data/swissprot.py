@@ -1,9 +1,13 @@
-from Bio import SeqIO
 import pandas as pd
-from os import makedirs
-parsed_folder = "../../parsed_data/"
-records = SeqIO.parse("../../raw_data/swissprot/uniprot_sprot.fasta", "fasta")
-data = [[str(a.seq), str(a.id).split("|")[1]] for a in records]
-df = pd.DataFrame(data, columns=["sequence", "id"])
+from Bio import SeqIO
+from functions import verify_sequences
+
+pdb_path = "../../raw_data/swissprot/uniprot_sprot.fasta"
+df = pd.DataFrame([[a.description, str(a.seq)] for a in list(SeqIO.parse(pdb_path, "fasta"))], columns=["id", "sequence"])
+df = df[["sequence"]]
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
 print(df)
-df.to_csv(f"{parsed_folder}/swissprot.csv", index=False)
+df.to_csv("../../parsed_data/swissprot.csv", index=False)

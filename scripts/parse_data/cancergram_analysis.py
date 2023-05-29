@@ -1,4 +1,5 @@
 import pandas as pd
+from functions import verify_sequences
 raw_folder = "../../raw_data/cancergram_analysis/"
 a = pd.read_csv(f"{raw_folder}/pos_test_main.txt", header=None)
 b = pd.read_csv(f"{raw_folder}/pos_train_main.txt", header=None)
@@ -16,5 +17,9 @@ amp = pd.concat([e, f, g, h])
 amp["activity"] = "antimicrobial"
 df = pd.concat([anticancer, amp])
 df = df.rename(columns={0: "sequence"})
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
 print(df)
 df.to_csv("../../parsed_data/cancergram_analysis.csv", index=False)

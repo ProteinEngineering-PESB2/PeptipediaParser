@@ -1,9 +1,21 @@
-from os.path import basename
-import requests
+#http://dramp.cpu-bioinfor.org/downloads/
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
 from os import makedirs
-url = "http://dramp.cpu-bioinfor.org/downloads/download.php?filename=download_data/DRAMP3.0_new/general_amps.xlsx"
-raw_folder = "../../raw_data/dramp/"
-makedirs(raw_folder)
-path = raw_folder + basename(url)
-with open(path, encoding="utf-8", mode="w") as file:
-    file.write(requests.get(url).text)
+from os.path import abspath
+from generic_getter import getter
+raw_folder = abspath("../../raw_data/dramp/")
+makedirs(raw_folder, exist_ok=True)
+
+options = Options()
+options.add_argument("-headless")
+options.set_preference("browser.download.folderList", 2)
+options.set_preference("browser.download.dir", raw_folder)
+driver = webdriver.Firefox(options=options)
+url = "http://dramp.cpu-bioinfor.org/downloads/"
+driver.get(url)
+a = driver.find_elements(By.TAG_NAME, "table")[1].find_elements(By.TAG_NAME, "a")
+a = [i for i in a if ".fasta" in i.get_attribute("href")]
+for i in a:
+    i.click()

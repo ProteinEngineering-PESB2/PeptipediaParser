@@ -1,7 +1,12 @@
 import pandas as pd
-a = pd.read_excel("../../raw_data/neuropedia/Database_NeuroPedia_063011.xls", skiprows=1)
-a["sequence"] = a[["Amino acid Sequence"]]
-a = a[["sequence"]]
-a[["activity"]] = "neuropeptide"
-a = a.drop_duplicates()
-a.to_csv(".././parsed_data/neuropedia.csv", index=False)
+from functions import verify_sequences
+df = pd.read_excel("../../raw_data/neuropedia/Database_NeuroPedia_063011.xls", skiprows=1)
+df["sequence"] = df[["Amino acid Sequence"]]
+df = df[["sequence"]]
+df[["activity"]] = "neuropeptide"
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
+print(df)
+df.to_csv("../../parsed_data/neuropedia.csv", index=False)

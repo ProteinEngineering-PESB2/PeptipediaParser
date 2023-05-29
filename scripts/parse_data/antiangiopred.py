@@ -1,12 +1,10 @@
 from os import listdir
 from Bio import SeqIO
 import pandas as pd
-from config import *
-from os.path import basename
+from functions import verify_sequences
 import os
-script_name = basename(__file__.split(".")[0])
 full_data = []
-raw_folder = RAW_FOLDER.format(script_name)
+raw_folder = "../../raw_data/antiangiopred/"
 dfs = []
 for filename in listdir(raw_folder):
     path = os.path.join(raw_folder, filename)
@@ -14,5 +12,8 @@ for filename in listdir(raw_folder):
     a["activity"] = "antiangiogenic"
     dfs.append(a)
 df = pd.concat(dfs)
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
 print(df)
-df.to_csv(os.path.join(PARSED_FOLDER, script_name + ".csv"), index=False)
+df.to_csv(os.path.join("../../parsed_data/antiangiopred.csv"), index=False)

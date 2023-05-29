@@ -1,37 +1,26 @@
 import pandas as pd
+import os
+from functions import verify_sequences
 from Bio import SeqIO
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
-import time
-options = Options()
-options.headless = True
-
-compare_df = [[str(record.id), str(record.seq)] for record in SeqIO.parse("../../raw_data/compare/COMPARE-2023-FastA-Seq.txt", "fasta")]
-compare_df = pd.DataFrame(compare_df, columns=["id", "sequence"])
-
-allergen_sequences = []
-
-driver = webdriver.Firefox(options=options)
-a = pd.read_csv("../../raw_data/allergenonline/Browse the Database.csv")
-for row in a["Accession"]:
-    match = compare_df[compare_df.id == row]
-    if len(match) != 0:
-        allergen_sequences.append(str(match.sequence.values[0]))
-    else:
-        url = f"https://www.ncbi.nlm.nih.gov/protein/{row}?report=fasta"
-        driver.get(url)
-        time.sleep(2)
-        try:
-            a = driver.find_elements(By.ID, "viewercontent1")[0]
-            sequence = "".join(a.text.splitlines()[1:])
-            allergen_sequences.append(sequence)
-        except Exception as e:
-            print(e, row)
-driver.quit()
-allergenonline = pd.DataFrame()
-allergenonline["sequence"] = allergen_sequences
-allergenonline["activity"] = "allergen"
-
-allergenonline = allergenonline[allergenonline.sequence.str.len() <= 150]
-allergenonline.to_csv(".././parsed_data/allergenonline.csv", index=False)
+raw_folder = "../../raw_data/allergenonline/"
+filename = "Browse the Database.csv"
+compare_path = "../../raw_data/compare/COMPARE-2023-FastA-Seq.txt"
+compare = pd.DataFrame([[a.id.split()[0], str(a.seq)] for a in list(SeqIO.parse(compare_path, "fasta"))], columns=["id", "sequence"])
+pdb_path = "../../raw_data/rcsb_pdb/pdb_seqres.txt"
+pdb = pd.DataFrame([[a.id.split()[0].upper(), str(a.seq)] for a in list(SeqIO.parse(pdb_path, "fasta"))], columns=["id", "sequence"])
+path = os.path.join(raw_folder, filename)
+data = pd.read_csv(path, sep=",")
+merged = data.merge(compare, left_on="Accession", right_on="id")
+merged2 = data.merge(pdb, left_on="Accession", right_on="id")
+merged = pd.concat([merged, merged2])
+rest_ids = pd.Series([str(a).split(".")[0] for a in list(set(data.Accession) - set(merged.Accession)) if a != None])
+rest = pd.DataFrame()
+rest["id"] = rest_ids
+rest_merged = compare.merge(rest, right_on="id", left_on="id")
+data = pd.concat([merged, rest_merged])[["sequence"]]
+data["activity"] = "allergen"
+data["sequence"] = data["sequence"].map(verify_sequences)
+data = data.dropna(subset=["sequence"])
+data = data.drop_duplicates()
+print(data)
+data.to_csv(os.path.join("../../parsed_data/allergenonline.csv"), index=False)

@@ -1,0 +1,12 @@
+import pandas as pd
+from functions import verify_sequences
+df = pd.read_csv("../../raw_data/quorumpeps/quorumpeps.csv")
+df = df[["Sequence"]].rename(columns={"Sequence": "sequence"})
+df["activity"] = "quorum-sensing"
+
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
+print(df)
+df.to_csv("../../parsed_data/quorumpeps.csv", index=False)

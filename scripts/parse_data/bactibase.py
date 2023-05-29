@@ -1,31 +1,16 @@
-import requests
-from bs4 import BeautifulSoup
+from Bio import SeqIO
 import pandas as pd
-
-import requests
-class Uniprot:
-    """Find sequence in uniprot files"""
-    def __init__(self):
-        self.uniprot_path = """https://rest.uniprot.org/uniprotkb/{}.fasta"""
-    def get_sequence(self, uniprot_id):
-        print(uniprot_id)
-        try:
-            response = requests.get(
-                self.uniprot_path.format(uniprot_id), timeout=10000)
-            if response.status_code == 200:
-                sequence = "".join(response.text.splitlines()[1:])
-                return sequence
-        except:
-            pass
-
-bactibase = pd.read_csv("../../raw_data/bactibase/bactibase.csv")
-swissprot = pd.read_csv("../../parsed_data/swissprot.csv")
-merged = bactibase.merge(swissprot, left_on="UniProt", right_on="id")
-merged["activity"] = '["bacteriocin", "antimicrobial", "antibacterial"]'
-merged["activity"] = merged["activity"].map(eval)
-merged = merged.explode("activity")
-merged = merged[["sequence", "activity"]]
-merged = merged.dropna()
-merged = merged.drop_duplicates()
-print(merged)
-merged.to_csv("../../parsed_data/bactibase.csv", index=False)
+from functions import verify_sequences
+df = pd.read_csv("../../raw_data/bactibase/bactibase.csv")
+swissprot = "../../raw_data/swissprot/uniprot_sprot.fasta"
+swissprot = pd.DataFrame([[a.id.split("|")[1], str(a.seq)] for a in list(SeqIO.parse(swissprot, "fasta"))], columns=["id", "sequence"])
+df = df.merge(swissprot, left_on="UniProt", right_on="id")
+df = df[["sequence"]]
+df["activity"] = '["bacteriocin", "antimicrobial", "antibacterial"]'
+df["activity"] = df["activity"].map(eval)
+df = df.explode("activity")
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
+print(df)
+df.to_csv("../../parsed_data/bactibase.csv", index=False)

@@ -1,12 +1,15 @@
 import pandas as pd
 from Bio import SeqIO
-train = [str(a.seq) for a in SeqIO.parse("../raw_data/predneurop/pos_train.fasta", format="fasta")]
-test = [str(a.seq) for a in SeqIO.parse("../raw_data/predneurop/pos_test.fasta", format="fasta")]
+import os
 
-sequences = train + test
+
+raw_folder = "../../raw_data/predneurop/"
+sequences = []
+for filename in os.listdir(raw_folder):
+    sequences += [str(a.seq) for a in SeqIO.parse(f"{raw_folder}/{filename}", format="fasta")]
 
 df = pd.DataFrame()
 df["sequence"] = sequences
 df["activity"] = "neuropeptide"
-df.to_csv("../parsed_data/predneurop.csv", index=False)
 print(df)
+df.to_csv("../../parsed_data/predneurop.csv", index=False)

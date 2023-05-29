@@ -1,10 +1,7 @@
-import os
 import pandas as pd
+from functions import verify_sequences
 data = []
-for a in os.listdir("../../raw_data/camp/"):
-    a = pd.read_csv(f"../../raw_data/camp/{a}", sep="\t")
-    data.append(a)
-df = pd.concat(data)
+df = pd.read_csv("../../raw_data/camp/CAMP_2023-05-26 20-14-20.txt", sep="\t")
 df = df[["Activity", "Gram_Nature", "Seqence"]]
 df = df.drop_duplicates()
 df["Activity"] = df["Activity"].str.replace(" ", "").str.split(",")
@@ -18,7 +15,9 @@ df = df.replace("Gram+ve", "gram-positive")
 df = df.replace("Gram-ve", "gram-negative")
 df = df.rename(columns={"Seqence": "sequence", "Activity": "activity"})
 df.activity = df.activity.str.lower()
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
-df = df[df.sequence.str.len() <= 150]
-df.to_csv("../../parsed_data/camp.csv", index=False)
 print(df)
+df.to_csv("../../parsed_data/camp.csv", index=False)

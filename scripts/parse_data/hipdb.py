@@ -1,8 +1,13 @@
 import pandas as pd
-a = pd.read_excel("../../raw_data/hipdb/HIPdb_data.xls")
-a = a[["SEQUENCE"]]
-a["activity"] = "antiviral"
-a = a.rename(columns={"SEQUENCE": "sequence"})
-a.to_csv("../../parsed_data/hipdb.csv", index=False)
+from functions import verify_sequences
+df = pd.read_excel("../../raw_data/hipdb/HIPdb_data.xls")
+df = df[["SEQUENCE"]]
+df["activity"] = "antiviral"
+df = df.rename(columns={"SEQUENCE": "sequence"})
 
-print(a)
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
+print(df)
+df.to_csv("../../parsed_data/hipdb.csv", index=False)

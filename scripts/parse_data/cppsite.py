@@ -1,9 +1,14 @@
 from Bio import SeqIO
 import pandas as pd
-records = SeqIO.parse("../../raw_data/cppsite/cppsite.fasta", "fasta")
+from functions import verify_sequences
+records = SeqIO.parse("../../raw_data/cppsite/natural_pep.fa", "fasta")
 sequences = [str(a.seq) for a in records]
-data = pd.DataFrame()
-data["sequence"] = sequences
-data["activity"] = "cell-penetrating"
-print(data)
-data.to_csv("../../parsed_data/cppsite.csv", index=False)
+df = pd.DataFrame()
+df["sequence"] = sequences
+df["activity"] = "cell penetrating"
+df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].map(verify_sequences)
+df = df.dropna(subset=["sequence"])
+df = df.drop_duplicates()
+print(df)
+df.to_csv("../../parsed_data/cppsite.csv", index=False)

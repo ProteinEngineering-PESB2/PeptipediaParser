@@ -18,5 +18,4 @@ driver = webdriver.Firefox(options=options)
 driver.get("https://bioinformatics.cs.ntou.edu.tw/adam/search_adam.php")
 table = driver.find_elements(By.TAG_NAME, "table")[1].get_attribute("outerHTML")
 data = pd.read_html(table, header=1)[0]
-print(data)
 data.to_csv(f"{raw_folder}/data.csv", index=False)
