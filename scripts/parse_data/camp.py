@@ -11,10 +11,17 @@ df = pd.concat([
     df[["Seqence", "Gram_Nature"]].rename(columns = {"Gram_Nature": "Activity"})
 ])
 df = df.explode("Activity")
-df = df.replace("Gram+ve", "gram-positive")
-df = df.replace("Gram-ve", "gram-negative")
+replace_dict = {"gram+ve": "anti gram positive",
+                "gram-ve": "anti gram negative",
+                "gram-": "anti gram negative", "gram+": "anti gram positive",
+                "antiparasitic": "anti parasitic",
+                None: "", "ram+ve": "anti gram positive", "antitumor": "antitumour"
+                }
 df = df.rename(columns={"Seqence": "sequence", "Activity": "activity"})
+df.activity = df.activity.str.split(".")
+df = df.explode("activity")
 df.activity = df.activity.str.lower()
+df.activity = df.activity.replace(replace_dict)
 df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])

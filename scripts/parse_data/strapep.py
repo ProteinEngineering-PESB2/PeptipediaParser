@@ -5,5 +5,8 @@ df = df[["Sequence", "Classification"]].rename(columns={"Classification": "activ
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
+df.activity = df.activity.str.lower()
+replace_dict = {"toxin and venom peptide": "toxic", "cytokine/growth factor": "cytokines / growth factor", "other": ""}
+df.activity = df.activity.replace(replace_dict)
 print(df)
 df.to_csv("../../parsed_data/strapep.csv", index=False)

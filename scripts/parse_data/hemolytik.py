@@ -14,5 +14,8 @@ df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
+replace_dict = {"toxi": "toxic", "cpp": "cell penetrating", "antiparasitic": "anti parasitic"}
+print(df.activity.unique())
+df.activity = df.activity.replace(replace_dict)
 print(df)
 df.to_csv("../../parsed_data/hemolytik.csv", index=False)

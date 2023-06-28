@@ -10,7 +10,7 @@ for filename in listdir(raw_folder):
     path = os.path.join(raw_folder, filename)
     a = pd.DataFrame([[a.id.split("|")[1], str(a.seq)] for a in list(SeqIO.parse(path, "fasta"))], columns=["activity", "sequence"])
     a = a[a.activity == "1"]
-    a["activity"] = "blood-brain barrier penetrating"
+    a["activity"] = "blood brain barrier penetrating"
     dfs.append(a)
 df = pd.concat(dfs)
 df = df[["sequence", "activity"]]

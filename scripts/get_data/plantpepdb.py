@@ -46,4 +46,4 @@ def get_sequence(id):
         pass
 df["sequence"] = df["PPepDB-ID"].map(get_sequence)
 df = df.dropna(subset="sequence")
-df.to_csv("../../parsed_data/plantpepdb.csv", index=False)
+df.to_csv("../../raw_data/plantpepdb.csv", index=False)

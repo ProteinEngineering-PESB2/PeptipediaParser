@@ -8,7 +8,7 @@ sequences = train + test
 
 df = pd.DataFrame()
 df["sequence"] = sequences
-df["activity"] = "antiinflamatory"
+df["activity"] = "anti inflammatory"
 df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])

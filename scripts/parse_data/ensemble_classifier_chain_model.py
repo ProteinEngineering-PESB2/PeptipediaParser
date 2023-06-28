@@ -9,7 +9,7 @@ for file in os.listdir(raw_folder):
     df.columns=["id", "sequence"]
     dfs.append(df)
 df = pd.concat(dfs)
-df["activity"] = "antiinflamatory"
+df["activity"] = "anti inflammatory"
 df = df[["sequence", "activity"]]
 df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)

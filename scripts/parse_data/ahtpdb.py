@@ -8,7 +8,7 @@ for filename in os.listdir(raw_folder):
     path = os.path.join(raw_folder, filename)
     data = pd.read_csv(path, sep="\t")
     data = data[["seq "]]
-    data["activity"] = "antihipertensive"
+    data["activity"] = "anti hypertensive"
     data = data.rename(columns={"seq ": "sequence"})
     dfs.append(data)
 

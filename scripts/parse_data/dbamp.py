@@ -2,10 +2,11 @@ import os
 import pandas as pd
 from Bio import SeqIO
 from functions import verify_sequences
-replace_dict = {"mammaliancells": "anti mammalian", "cellpenetrating": "cell penetrating", "mollicute": "anti mollicute",
+replace_dict = {"mammaliancells": "anti mammalian cell", "cellpenetrating": "cell penetrating", "mollicute": "anti mollicute", "antiparasitic": "anti parasitic",
                 "mastcelldegranulating": "mast cell degranulating", "plasmaanticlotting": "plasma anti clotting", "woundhealing": "wound healing",
-                "edemainducer": "edema inducer", "surfaceimmobilized": "surface immobilized", "antigram_p": "anti gram-positive",
-                "antigram_n": "anti gram-negative"}
+                "edemainducer": "edema inducer", "surfaceimmobilized": "surface immobilized", "anti,gram_p": "anti gram positive", "antioxidant": "antioxidative",
+                "antigram_n": "anti gram negative", "antihypertensive": "anti hypertensive", "antiinflammatory": "anti inflammatory", "antigram_p": "anti gram positive",
+                "antiangiogenesis": "anti angiogenic", "antihiv": "anti hiv", "antimalarial": "anti malarian", "antinematode": "anti nematode", "antimrsa": "anti mrsa", "cytotoxin": "cytotoxic", "enzymeinhibitor": "enzyme inhibitor"}
 
 raw_folder = "../../raw_data/dbamp/"
 dfs = []
@@ -20,6 +21,6 @@ df = df.replace(replace_dict)
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
-df = df.replace(replace_dict)
+df.activity = df.activity.replace(replace_dict)
 print(df)
 df.to_csv("../../parsed_data/dbamp.csv", index=False)

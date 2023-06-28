@@ -7,7 +7,7 @@ dfs = []
 for filename in os.listdir(raw_folder):
     path = os.path.join(raw_folder, filename)
     data = pd.read_csv(path)
-    data["activity"] = "antitubercular"
+    data["activity"] = "anti tubercular"
     data = data.rename(columns={"Sequence": "sequence"})
     dfs.append(data)
 df = pd.concat(dfs)

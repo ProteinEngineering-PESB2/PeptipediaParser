@@ -7,5 +7,8 @@ df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
+df["activity"] = df["activity"].str.lower()
+replace_dict = {"antioxidant": "antioxidative", "anorectic": "anorexic", "haemolytic": "hemolytic", "immunomodulating": "immunomodulatory"}
+df.activity = df.activity.replace(replace_dict)
 print(df)
 df.to_csv("../../parsed_data/biopep.csv", index=False)

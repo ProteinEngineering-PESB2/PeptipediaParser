@@ -8,7 +8,7 @@ df = pd.concat([
     df[["sequence", "type"]].rename(columns={"type": "activity"}),
     df[["sequence", "activity"]]
 ])
-df = df.replace({"Type 1 Diabetes": "type 1 diabetes", "Type 2 Diabetes": "type 2 diabetes"})
+df = df.replace({"Type 1 Diabetes": "anti type 1 diabetes", "Type 2 Diabetes": "anti type 2 diabetes"})
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()

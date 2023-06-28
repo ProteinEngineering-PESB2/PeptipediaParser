@@ -2,7 +2,8 @@ import pandas as pd
 import os
 from Bio import SeqIO
 from functions import verify_sequences
-replace_dict = {"Anti-Gram-": "anti gram-negative", "Anti-Gram+": "anti gram-positive"}
+replace_dict = {"anti-Gram-": "anti gram negative", "anti-Gram+": "anti gram positive",
+                "antiparasitic": "anti parasitic"}
 dfs = []
 raw_folder = "../../raw_data/dramp/"
 for file in os.listdir(raw_folder):
@@ -11,6 +12,7 @@ for file in os.listdir(raw_folder):
     a["activity"] = file.replace("_amps.fasta", "").lower()
     dfs.append(a)
 df = pd.concat(dfs)
+df.activity = df.activity.map(replace_dict)
 df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])

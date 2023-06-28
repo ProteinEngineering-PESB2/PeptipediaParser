@@ -11,8 +11,12 @@ for file in os.listdir(raw_folder):
     dfs.append(a)
 df = pd.concat(dfs)
 df = df.dropna(subset=["sequence"])
+df["sequence"] = df["sequence"].str.replace("+", "")
+df["sequence"] = df["sequence"].str.replace("-", "")
 df["sequence"] = df["sequence"].map(verify_sequences)
+print(df)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
-print(df)
+replace_dict = {"allergic" :"allergen", "toxin": "toxic", "antiinflammatory": "anti inflammatory", "unknown": "", "others": "", "antiparasitic": "anti parasitic", "antitoxin": "anti toxin", "peptide potentiator": "potentiator"}
+df.activity = df.activity.replace(replace_dict)
 df.to_csv("../../parsed_data/erop_moskow.csv", index=False)

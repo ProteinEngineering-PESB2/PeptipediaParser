@@ -2,10 +2,10 @@ import pandas as pd
 from functions import verify_sequences
 import os
 from Bio import SeqIO
-replace_dict  = {"Biofilm" : "antibiofilm", "Cancer": "anticancer", "Fungus": "antifungal",
-                 "Gram-": "anti gram-negative", "Gram+": "anti gram-positive", "Insect": "anti insect",
+replace_dict  = {"Biofilm" : "anti biofilm", "Cancer": "anticancer", "Fungus": "antifungal",
+                 "Gram-": "anti gram negative", "Gram+": "anti gram positive", "Insect": "anti insect",
                  "Mammalian Cell": "anti mammalian cell", "Mollicute": "anti mollicute", "Nematode": "anti nematode",
-                 "Parasite": "anti parasite", "Protista": "anti protista", "Virus": "antiviral"}
+                 "Parasite": "anti parasitic", "Protista": "anti protista", "Virus": "antiviral"}
 raw_folder = "../../raw_data/dbaasp/"
 datas = []
 for filename in os.listdir(raw_folder):

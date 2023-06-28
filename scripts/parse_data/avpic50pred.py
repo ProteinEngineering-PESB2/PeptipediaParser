@@ -9,7 +9,6 @@ dfs = []
 for filename in listdir(raw_folder):
     path = os.path.join(raw_folder, filename)
     a = pd.read_csv(path)
-    a["activity"] = "antiviral"
     dfs.append(a)
 df = pd.concat(dfs)
 df = df.rename(columns={"Sequence": "sequence"})

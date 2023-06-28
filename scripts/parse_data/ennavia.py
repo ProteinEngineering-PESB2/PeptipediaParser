@@ -10,7 +10,6 @@ for file in os.listdir(raw_folder):
     a = a[~a.activity.str.contains("non")]
     dfs.append(a)
 df = pd.concat(dfs)
-print(df)
 df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].map(verify_sequences)
 df = df.dropna(subset=["sequence"])
