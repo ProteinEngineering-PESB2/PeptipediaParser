@@ -1,7 +1,6 @@
 #http://isyslab.info/StraPep/browse.php?classification=Antimicrobial
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
 import pandas as pd
 from os import makedirs
 import time
@@ -12,9 +11,14 @@ from selenium.webdriver.support.ui import Select
 raw_folder = "../../raw_data/strapep/"
 makedirs(raw_folder, exist_ok=True)
 
-options = Options()
-options.add_argument("-headless")
-driver = webdriver.Firefox(options=options)
+chromeOptions = webdriver.ChromeOptions()
+prefs = {"download.default_directory" : raw_folder}
+chromeOptions.add_experimental_option("prefs",prefs)
+chromeOptions.add_argument("--headless")
+chromeOptions.add_argument('--ignore-ssl-errors=yes')
+chromeOptions.add_argument('--ignore-certificate-errors')
+driver = webdriver.Chrome(options=chromeOptions)
+
 dfs = []
 activities = ["Antimicrobial", "Toxin and venom peptide", "Cytokine/Growth factor", "Hormone", "Neuropeptide", "Other"]
 for act in activities:

@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import Select
 import time
 from os import makedirs
@@ -9,13 +8,14 @@ from os.path import abspath
 raw_folder = abspath("../../raw_data/camp/")
 makedirs(raw_folder, exist_ok=True)
 
-options = Options()
+chromeOptions = webdriver.ChromeOptions()
+prefs = {"download.default_directory" : raw_folder}
+chromeOptions.add_experimental_option("prefs",prefs)
+chromeOptions.add_argument("--headless")
+chromeOptions.add_argument('--ignore-ssl-errors=yes')
+chromeOptions.add_argument('--ignore-certificate-errors')
+driver = webdriver.Chrome(options=chromeOptions)
 
-options.set_preference("browser.download.folderList", 2)
-options.set_preference("browser.download.dir", raw_folder)
-
-options.add_argument("-headless")
-driver = webdriver.Firefox(options=options)
 driver.get("http://www.camp3.bicnirrh.res.in/dbSearch/seqSearch.php")
 driver.find_element(By.ID, "textbox1").send_keys("a")
 select = Select(driver.find_element(By.ID, "dbFeature1"))
