@@ -22,19 +22,21 @@ phgo.rename(columns={"id": "id_peptide"}).to_csv("../tables/peptide_has_go.csv",
 peptipedia_data = pd.read_csv("../output/peptipedia_data.csv")
 sources = peptipedia_data[["source"]].drop_duplicates().reset_index(drop=True)
 sources["id_source"] = sources.index + 1
+sources = sources.rename(columns={"source": "name"})
 sources.to_csv("../tables/source.csv", index=False)
-peptipedia_data = peptipedia_data.merge(sources, on="source")
-phs = peptipedia_data[["id", "id_source"]]
+peptipedia_data = peptipedia_data.merge(sources, left_on="source", right_on="name")
+phs = peptipedia_data[["id", "id_source"]].drop_duplicates()
 phs.rename(columns={"id": "id_peptide"}).to_csv("../tables/peptide_has_source.csv", index=False)
 
 activities = pd.read_csv("../output/activities_count.csv")
 activities = activities.rename(columns={"activity": "name"})[["name"]]
 
 activities["id_activity"] = activities.index + 1
+
 activities.to_csv("../tables/activity.csv", index=False)
 
 pivoted = pd.read_csv("../output/activity_pivoted.csv")
 melted = pivoted.melt(id_vars=["id", "sequence", "is_canon"], var_name="activity")
 melted = melted[melted.value == 1][["id", "activity"]]
-melted = melted.merge(activities, left_on="activity", right_on="name")[["id", "id_activity"]]
+melted = melted.merge(activities, left_on="activity", right_on="name")[["id", "id_activity"]].drop_duplicates().rename(columns={"id":"id_peptide"})
 melted.to_csv("../tables/peptide_has_activity.csv", index=False)
