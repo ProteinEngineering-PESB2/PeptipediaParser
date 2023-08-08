@@ -9,7 +9,8 @@ df = pd.concat([
     df[["sequence", "activity"]]
 ])
 df = df.replace({"Type 1 Diabetes": "anti type 1 diabetes", "Type 2 Diabetes": "anti type 2 diabetes"})
-df["sequence"] = df["sequence"].map(verify_sequences)
+
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

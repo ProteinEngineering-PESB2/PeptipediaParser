@@ -13,7 +13,7 @@ for filename in os.listdir(raw_folder):
     dfs.append(data)
 
 df = pd.concat(dfs)
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

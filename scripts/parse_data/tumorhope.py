@@ -5,7 +5,7 @@ df = df[["Sequence", "Homing/targeting"]].rename(columns={"Sequence": "sequence"
 df["prefix"] = "tumor-"
 df["activity"] = df.prefix + df.activity.str.lower()
 df = df[["sequence", "activity"]]
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 replace_dict = {"tumor-homing (phage display clone)": "tumor-homing", "tumor-targeting & further studied": "tumor-targeting"}

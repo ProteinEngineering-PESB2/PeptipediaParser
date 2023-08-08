@@ -10,7 +10,7 @@ for file in os.listdir("../../raw_data/peptideatlas/"):
     sequences_total += sequences
 df["sequence"] = sequences_total
 df = df.dropna(subset=["sequence"])
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

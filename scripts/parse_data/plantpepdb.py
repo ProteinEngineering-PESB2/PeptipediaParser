@@ -9,7 +9,7 @@ replace_dict = {"antihypertensive": "anti hypertensive", "anti-inflammatory": "a
                 "defense-gene-activator": "defense gene activator", "tyrosinase-inhibitor": "tyrosinase inhibitor",
                 "uterotonic-activity": "uterotonic", "protease-inhibitor": "protease inhibitor", "hmg-coa-reductase-inhibitor": "hmg-coa reductase inhibitor",
                 "cell-growth-inhibitor": "cell growth inhibitor", "development-regulator": "development regulator", "enzyme-inhibitor": "enzyme inhibitor",
-                "nematocide": "anti nematode", "opioid-agonist": "opioid agonist", "opioid-antagonist": "opioid antagonist"}
+                "nematocide": "anti nematode", "opioid-agonist": "opioid antagonist", "opioid-antagonist": "opioid antagonist", "anti-amnestic": "antiamnestic", "anti-protist": "anti protista", "signaling-peptide": "signal"}
 
 dfs = []
 raw_folder = "../../raw_data/plantpepdb/"
@@ -21,7 +21,7 @@ df["activity"] = df.activity.str.split(", ")
 df = df.explode("activity")
 df.activity = df.activity.str.lower()
 df.activity = df.activity.replace(replace_dict)
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

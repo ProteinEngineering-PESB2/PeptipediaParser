@@ -15,7 +15,7 @@ for filename in listdir(raw_folder):
     df["activity"] = filename.replace(".fasta", "")
     dfs.append(df)
 df = pd.concat(dfs)
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 replace_dict = {"antihypertensive": "anti hypertensive", "drug_delivery_vehicle": "drug delivery vehicle",

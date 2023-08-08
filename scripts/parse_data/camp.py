@@ -15,7 +15,7 @@ replace_dict = {"gram+ve": "anti gram positive",
                 "gram-ve": "anti gram negative",
                 "gram-": "anti gram negative", "gram+": "anti gram positive",
                 "antiparasitic": "anti parasitic",
-                None: "", "ram+ve": "anti gram positive", "antitumor": "antitumour"
+                None: "", "ram+ve": "anti gram positive", "antitumour": "antitumor"
                 }
 df = df.rename(columns={"Seqence": "sequence", "Activity": "activity"})
 df.activity = df.activity.str.split(".")
@@ -23,7 +23,7 @@ df = df.explode("activity")
 df.activity = df.activity.str.lower()
 df.activity = df.activity.replace(replace_dict)
 df = df.dropna(subset=["sequence"])
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

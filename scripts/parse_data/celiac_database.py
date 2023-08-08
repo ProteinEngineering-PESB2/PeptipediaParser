@@ -6,7 +6,7 @@ df = df.rename(columns={"Sequence": "sequence", "Toxicity": "activity"})
 
 df["activity"] = df["activity"].str.lower() + " celiac"
 df = df.dropna(subset=["sequence"])
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 
 df.activity = df.activity.str.split(", ")

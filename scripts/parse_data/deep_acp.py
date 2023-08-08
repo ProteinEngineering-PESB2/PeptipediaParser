@@ -7,7 +7,7 @@ c = pd.DataFrame([[str(c.seq)] for c in list(SeqIO.parse("../../raw_data/deepacp
 df = pd.concat([a, b, c])
 df["activity"] = "anticancer"
 df = df.dropna(subset=["sequence"])
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

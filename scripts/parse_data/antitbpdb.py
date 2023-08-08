@@ -11,9 +11,9 @@ for filename in os.listdir(raw_folder):
     data = data.rename(columns={"Sequence": "sequence"})
     dfs.append(data)
 df = pd.concat(dfs)
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
-df = df[["sequence", "activity"]]
+df = df[["sequence", "activity", "is_canon"]]
 print(df)
 df.to_csv(os.path.join("../../parsed_data/antitbpdb.csv"), index=False)

@@ -19,7 +19,7 @@ rest["id"] = rest_ids
 rest_merged = compare.merge(rest, right_on="id", left_on="id")
 data = pd.concat([merged, rest_merged])[["sequence"]]
 data["activity"] = "allergen"
-data["sequence"] = data["sequence"].map(verify_sequences)
+data["sequence"],data["is_canon"] = zip(*data["sequence"].map(verify_sequences))
 data = data.dropna(subset=["sequence"])
 data = data.drop_duplicates()
 print(data)

@@ -1,0 +1,92 @@
+All activities
+	Therapeutic
+		Antimicrobial
+			Anti protist
+			Surface immobilized
+			Antiviral
+				Anti HIV
+				Anti coronoavirus
+			Antibacterial
+				Anti gram positive
+					Anti methicillin resistant S.aureus
+				Anti gram negative
+				Antibiofilm
+				Anti tuberculosis
+				Anti endotoxin
+				Bacteriocin
+				Anti mollicute
+			Antifungal
+				Anti candida
+			Anuran defense
+			Antiprotozoal
+				Antimalarial
+		Toxic
+			Insecticidal
+			Anti mammalian cell
+			Cytotoxic
+				Hemolytic
+				Celiac toxic
+			Antiparasitic
+				Anti nematode
+			Neurotoxin
+		Anticancer
+			Antitumor
+				Tumor homing
+				Tumor targeting
+		Metabolic
+			Pain related
+				Opioid
+			Eating behavior
+				Taste
+			Hormone
+				Pheromone
+			Anti inflamatory
+			Regulatory
+				Coagulation regulator
+				Homeostasis
+					Antidiabetic
+						Antidiabetic type 1
+						Antidiabetic type 2
+					Vascular
+						Anti angiogenic
+						Antithrombotic
+			Inhibitor
+				Enzyme inhibitor
+					Angiotensin converting enzyme (ACE) inhibitors
+					Dipeptidyl peptidase inhibitor
+					Glucosidase inhibitor
+					Protease inhibitor
+					Amylase inhibitor
+					Angiotensinase inhibitor
+			Activator
+				Sperm activating
+				Enzyme activator
+			Potentiator
+			Anti hypertensive
+			Anti hypotensive
+		Bioactive
+			Antioxidative
+	Neurological
+		Neuropeptide
+		Antiamnesic
+	Immunological
+		Cytokine
+		Allergen
+		Gluten immunogenic
+		Immunomodulatory
+			Wound healing
+		Immunoregulator
+	Drug delivery vehicle
+		Cell penetrating
+		Blood brain barrier penetrating
+	Sensorial
+		Cell cell communication
+		Quorum sensing
+		Chemotactic
+	Signal peptide
+	Molecule binding
+		DNA binding
+		RALF binding
+	Transit
+	Propeptide
+	Other

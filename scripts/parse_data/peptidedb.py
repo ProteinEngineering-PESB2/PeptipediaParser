@@ -19,7 +19,7 @@ for file in os.listdir(raw_folder):
     dfs.append(df)
 df = pd.concat(dfs)
 df = df.dropna(subset=["sequence"])
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 df.activity = df.activity.map(replace)

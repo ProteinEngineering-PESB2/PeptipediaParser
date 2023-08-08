@@ -3,7 +3,7 @@ from functions import verify_sequences
 import os
 from Bio import SeqIO
 replace_dict  = {"Biofilm" : "anti biofilm", "Cancer": "anticancer", "Fungus": "antifungal",
-                 "Gram-": "anti gram negative", "Gram+": "anti gram positive", "Insect": "anti insect",
+                 "Gram-": "anti gram negative", "Gram+": "anti gram positive", "Insect": "insecticidal",
                  "Mammalian Cell": "anti mammalian cell", "Mollicute": "anti mollicute", "Nematode": "anti nematode",
                  "Parasite": "anti parasitic", "Protista": "anti protista", "Virus": "antiviral"}
 raw_folder = "../../raw_data/dbaasp/"
@@ -16,7 +16,7 @@ for filename in os.listdir(raw_folder):
     df["activity"] = filename.split(".")[0]
     datas.append(df)
 df = pd.concat(datas)
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 df = df.replace(replace_dict)

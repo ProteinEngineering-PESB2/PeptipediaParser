@@ -13,10 +13,10 @@ df = pd.concat(dfs)
 df = df.dropna(subset=["sequence"])
 df["sequence"] = df["sequence"].str.replace("+", "")
 df["sequence"] = df["sequence"].str.replace("-", "")
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 print(df)
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
-replace_dict = {"allergic" :"allergen", "toxin": "toxic", "antiinflammatory": "anti inflammatory", "unknown": "", "others": "", "antiparasitic": "anti parasitic", "antitoxin": "anti toxin", "peptide potentiator": "potentiator"}
+replace_dict = {"allergic" :"allergen", "toxin": "toxic", "antiinflammatory": "anti inflammatory", "unknown": "", "others": "", "antiparasitic": "anti parasitic", "antitoxin": "anti toxin", "peptide potentiator": "potentiator", "antitumour": "antitumor", "antifreeze": "anti freeze", "salt precipitation inhibitor": "precipitation inhibitor", "sex pheromone inhibitor": "pheromone inhibitor"}
 df.activity = df.activity.replace(replace_dict)
 df.to_csv("../../parsed_data/erop_moskow.csv", index=False)

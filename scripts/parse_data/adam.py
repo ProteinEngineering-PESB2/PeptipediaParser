@@ -10,7 +10,7 @@ path = os.path.join(raw_folder, "data.csv")
 df = pd.read_csv(path, header=None)[[2]]
 df = df.rename(columns={2: "sequence"})
 df["activity"] = "antimicrobial"
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)

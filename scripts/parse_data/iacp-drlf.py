@@ -14,7 +14,7 @@ df = pd.concat([a, b, c, d])
 df = df[df.activity == "1"]
 df = df.replace("1", "anticancer")
 df = df.dropna(subset=["sequence"])
-df["sequence"] = df["sequence"].map(verify_sequences)
+df["sequence"], df["is_canon"] = zip(*df["sequence"].map(verify_sequences))
 df = df.dropna(subset=["sequence"])
 df = df.drop_duplicates()
 print(df)
