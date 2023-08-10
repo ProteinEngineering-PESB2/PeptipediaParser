@@ -78,9 +78,9 @@ activities = activities.sort_values(ascending=False)
 activities.to_csv("../output/activities_count.csv", index=True)
 
 ###
-a = df[["id", "sequence", "activity", "is_canon"]].drop_duplicates()
+""" a = df[["id", "sequence", "activity", "is_canon"]].drop_duplicates()
+a = a.dropna() """
 a["value"] = 1
-a = a.dropna()
-a = a.pivot(index=["id", "sequence", "is_canon"], columns="activity", values="value")
+a = a.pivot(index=["sequence"], columns="activity", values="value")
 a = a.fillna(0)
 a.to_csv("../output/activity_pivoted.csv", index=True)

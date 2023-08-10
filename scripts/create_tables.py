@@ -32,11 +32,18 @@ activities = pd.read_csv("../output/activities_count.csv")
 activities = activities.rename(columns={"activity": "name"})[["name"]]
 
 activities["id_activity"] = activities.index + 1
+descriptions = pd.read_csv("./descriptions.csv")
+print(activities)
+print(descriptions)
+activities = activities.merge(descriptions, on="name")
+print(activities)
 
 activities.to_csv("../tables/activity.csv", index=False)
 
 pivoted = pd.read_csv("../output/activity_pivoted.csv")
-melted = pivoted.melt(id_vars=["id", "sequence", "is_canon"], var_name="activity")
-melted = melted[melted.value == 1][["id", "activity"]]
-melted = melted.merge(activities, left_on="activity", right_on="name")[["id", "id_activity"]].drop_duplicates().rename(columns={"id":"id_peptide"})
+peptides = peptides.rename(columns={"id": "id_peptide"})
+pivoted = pivoted.merge(peptides, on="sequence")
+melted = pivoted.melt(id_vars=["sequence", "id_peptide"], var_name="activity")
+melted = melted[melted.value == 1][["id_peptide", "activity"]]
+melted = melted.merge(activities, left_on="activity", right_on="name")[["id_peptide", "id_activity"]].drop_duplicates()
 melted.to_csv("../tables/peptide_has_activity.csv", index=False)
