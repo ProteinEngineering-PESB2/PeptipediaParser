@@ -1,0 +1,11 @@
+beautifulsoup4==4.12.3
+biopython==1.83
+bs4==0.0.2
+lxml==5.1.0
+metapub==0.5.5
+networkx==3.2.1
+numpy==1.26.4
+pandas==2.2.1
+requests==2.31.0
+selenium==4.18.1
+tqdm==4.66.2

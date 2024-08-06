@@ -1,0 +1,22 @@
+"""Baamps"""
+import os
+import pandas as pd
+from utils import raw_folder, parse_df, parsed_folder
+try:
+    df = pd.read_csv(f"{raw_folder}/baamps/BAAMPs_data.csv", skiprows=1)
+    df = df[["PeptideSequence", "Microorganism group"]]
+    df["activity"] = '["anti biofilm", "antimicrobial"]'
+    df["activity"] = df["activity"].map(eval)
+    df = df.explode("activity")
+    df = df.rename(columns={"PeptideSequence": "sequence"})
+    df = pd.concat([
+        df[["sequence", "Microorganism group"]].rename(columns={"Microorganism group": "activity"}),
+        df[["sequence", "activity"]]
+    ])
+    df = df.drop_duplicates()
+    df = df.dropna()
+    df = parse_df(df)
+    df.to_csv(f"{parsed_folder}/baamps.csv", index=False)
+    print(os.path.basename(__file__), "success")
+except Exception as e:
+    print(__file__, e)
