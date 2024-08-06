@@ -1,10 +1,10 @@
-# PeptipediaDB: peptide sequence database and user-friendly web platform.
+# Peptipedia v2.0: A peptide sequence database and user-friendly web platform. A major update
 
 
 This repository contains reproducible data preprocessing for creating the Peptipedia database. <br>
 Gabriel Cabas-Mora<sup>1</sup>, Anamaría Daza<sup>2</sup>, Nicole Soto-García<sup>1</sup>, Valentina Garrido<sup>1</sup>, Diego Alvarez<sup>3,4</sup>, Marcelo Navarrete<sup>3,4</sup> , Lindybeth Sarmiento-Varón<sup>3</sup>, Julieta H. Sepúlveda<sup>5</sup>, Álvaro Olivera-Nappa<sup>2</sup>, Mehdi D. Davari<sup>6</sup>, Roberto Uribe-Paredes<sup>1</sup> and David Medina-Ortiz<sup>1,2*</sup>.<br>
 
-PeptipediaDB: peptide sequence database and user-friendly web platform. A major update. <br>
+Peptipedia v2.0: A peptide sequence database and user-friendly web platform. A major update <br>
 
 https://www.biorxiv.org/content/10.1101/2024.07.11.603053v1<br>
 
