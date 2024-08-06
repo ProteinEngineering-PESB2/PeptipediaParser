@@ -6,7 +6,7 @@ Gabriel Cabas-Mora<sup>1</sup>, Anamaría Daza<sup>2</sup>, Nicole Soto-García<
 
 PeptipediaDB: peptide sequence database and user-friendly web platform. A major update. <br>
 
-https://doi.org/XXXX<br>
+https://www.biorxiv.org/content/10.1101/2024.07.11.603053v1<br>
 
 <sup>*1*</sup><sub>Departamento de Ingeniería en Computación, Universidad de Magallanes, Av. Pdte. Manuel Bulnes 01855, 6210427, Punta Arenas, Chile.</sub> <br>
 <sup>*2*</sup><sub>Centre for Biotechnology and Bioengineering, CeBiB, Universidad de Chile, Avenida Beauchef 851, 8320000, Santiago, Chile.</sub> <br>
