@@ -1,0 +1,8 @@
+*__pycache__*
+*.log
+*.zip
+raw_data/
+parsed_data/
+output/
+auxiliar_data/
+tables/
