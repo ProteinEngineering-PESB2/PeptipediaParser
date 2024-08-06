@@ -34,3 +34,4 @@ Peptides have gained greater relevance in recent years thanks to their therapeut
 ## Requirements and instalation.
 
 This preprocessing workflow uses some python libraries listed on requirements.txt.
+The raw data and auxiliar data used in this workflow are stored [here](https://drive.google.com/drive/folders/14YFwy1SXkkZGdsso5OzkRN7OB7MArPrP?usp=drive_link).
