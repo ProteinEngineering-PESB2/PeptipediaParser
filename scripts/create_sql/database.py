@@ -2,14 +2,11 @@
 # pylint: disable=not-callable
 import os
 import pandas as pd
-from sqlalchemy import create_engine, text,select, func
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import Session
 from table_models import *
 from materialized_views import *
 from table_models import Base as BaseTables
-import networkx as nx
-from networkx.readwrite import json_graph
-from itertools import combinations
 import os
 from dotenv import load_dotenv
 
