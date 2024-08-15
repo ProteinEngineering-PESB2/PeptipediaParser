@@ -43,6 +43,14 @@ class Database:
             chunksize = chunk,
             index = False,
             schema="public")
+            
+    def create_mv(self, model):
+        definition = text(model().definition())
+        refresh = text(model().refresh())
+        self.session.execute(definition)
+        self.session.commit()
+        self.session.execute(refresh)
+        self.session.commit()
 
     def create_tables(self):
         """Create tables from ddl"""
