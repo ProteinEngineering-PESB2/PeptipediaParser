@@ -31,13 +31,6 @@ class Database:
         self.conn = self.engine.connect()
         # Config max items for selects
         self.session = Session(self.engine, future=True)
-    
-    def get_table(self, query):
-        return pd.read_sql(text(query), con=self.conn)
-    
-    def get_table_query(self, stmt):
-        """Applies a select for a previous stmt"""
-        return pd.read_sql(stmt, con = self.conn)
 
     def insert_data(self, data_file, model, chunk):
         """Insert data from csv files"""
@@ -50,26 +43,6 @@ class Database:
             chunksize = chunk,
             index = False,
             schema="public")
-    def insert_big_data(self, data_file, model, chunk):
-        """Insert data from csv files"""
-        tablename = model.__tablename__
-        header = pd.read_csv(data_file, nrows=1).columns
-        for i in range(1, 200):
-            data = pd.read_csv(data_file, low_memory=False, nrows=10**6, skiprows = i*10**6+2 + 104000000, header=None)
-            data.columns = header
-            print(data)
-            #else:
-            #    #data = pd.read_csv(data_file, low_memory=False, nrows=10**6)
-            if len(data) > 0:
-                data.to_sql(tablename,
-                    con = self.engine,
-                    if_exists = "append",
-                    method = "multi",
-                    chunksize = chunk,
-                    index = False,
-                    schema="public")
-            else:
-                break
 
     def create_tables(self):
         """Create tables from ddl"""
@@ -80,7 +53,7 @@ if __name__ == "__main__":
     path_to_tables = "../../tables/"
     db = Database()
     db.create_tables()
-    """db.insert_data(f"{path_to_tables}peptide.csv", Peptide, chunk=100)
+    db.insert_data(f"{path_to_tables}peptide.csv", Peptide, chunk=100)
     print("peptide")
     db.insert_data(f"{path_to_tables}source.csv", Source, chunk=100)
     print("source")
@@ -99,4 +72,4 @@ if __name__ == "__main__":
     db.insert_data(f"{path_to_tables}peptide_has_go.csv", PeptideHasGO, chunk=1000)
     print("peptide_has_go")
     db.insert_data(f"{path_to_tables}predictive_model.csv", PredictiveModel, chunk=1000)
-    print("predictive_model")"""
+    print("predictive_model")
