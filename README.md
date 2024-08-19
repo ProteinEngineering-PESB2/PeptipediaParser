@@ -32,7 +32,7 @@ In recent years, peptides have gained significant relevance due to their therape
 ## Requirements and instalation.
 
 This preprocessing workflow uses some python libraries listed on requirements.txt.
-The raw data and auxiliar data used in this workflow are stored [here](https://drive.google.com/drive/folders/14YFwy1SXkkZGdsso5OzkRN7OB7MArPrP?usp=drive_link).
+The raw data and auxiliar data used in this workflow are stored [here](https://drive.google.com/drive/folders/1IDNhWmROMfdpgj6ADunBgVb0YBBBaJui?usp=drive_link).
 
 ## Execute workflow.
 Using an appropiate conda environment, and adding auxiliar_data and raw_data to main path, execute run_processing.sh.

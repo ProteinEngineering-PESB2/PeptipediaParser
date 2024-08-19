@@ -6,3 +6,4 @@ parsed_data/
 output/
 auxiliar_data/
 tables/
+*.env

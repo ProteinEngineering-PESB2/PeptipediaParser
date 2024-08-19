@@ -20,3 +20,7 @@ python review_tree.py
 #Create tables
 cd ../create_tables
 bash create_tables.sh
+
+#Pivoted predicted table
+cd ../analyze_data/
+python pivot_predicted_activities.py
