@@ -8,6 +8,8 @@ sources = sources.rename(columns={"source": "name"})
 urls = pd.read_csv("../../auxiliar_data/source_descriptions.csv") #Info about source
 
 sources = sources.merge(urls, on="name", how="left")
+sources = sources.drop(columns=["active"])
+sources = sources.fillna("No information")
 sources.to_csv("../../tables/source.csv", index=False) #Sources table
 
 #Relationship between peptide and source

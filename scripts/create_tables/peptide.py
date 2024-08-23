@@ -18,6 +18,13 @@ half_life = half_life.groupby("sequence", as_index=False)["half_life"].apply(lam
 df = df[["id_sequence", "sequence", "is_canon", "nutraceutical", "swissprot_id"]]
 df = df.drop_duplicates()
 
+
+swissprot = df[["id_sequence", "swissprot_id"]].dropna().drop_duplicates()
+swissprot = swissprot.groupby("id_sequence")['swissprot_id'].agg(','.join).reset_index()
+df = df.drop(columns="swissprot_id").drop_duplicates()
+
+df = df.merge(swissprot, on="id_sequence", how="left")
+
 phy = pd.read_csv("../../auxiliar_data/physicochemical.csv") #Gets physicochemical data from table
 peptides = df.merge(phy, on="sequence", how="left")
 peptides["act_date"] = datetime.date.today()

@@ -57,9 +57,9 @@ class Database:
 if __name__ == "__main__":
     path_to_tables = "../../tables/"
     db = Database()
-    db.create_tables()
-    db.insert_data(f"{path_to_tables}peptide.csv", Peptide, chunk=100)
-    print("peptide")
+    #db.create_tables()
+    #db.insert_data(f"{path_to_tables}peptide.csv", Peptide, chunk=100)
+    #print("peptide")
     db.insert_data(f"{path_to_tables}source.csv", Source, chunk=100)
     print("source")
     db.insert_data(f"{path_to_tables}peptide_has_source.csv", PeptideHasSource, chunk=1000)
